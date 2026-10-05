@@ -6,22 +6,19 @@
         xmlns:local="clr-namespace:Okienkowe"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid RenderTransformOrigin="0.567,0.476">
-        <Grid.RenderTransform>
-            <TransformGroup>
-                <ScaleTransform/>
-                <SkewTransform/>
-                <RotateTransform Angle="0.26"/>
-                <TranslateTransform X="0.044" Y="0.244"/>
-            </TransformGroup>
-        </Grid.RenderTransform>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0*"/>
-            <ColumnDefinition Width="51*"/>
-            <ColumnDefinition Width="0*"/>
-            <ColumnDefinition Width="122*"/>
-            <ColumnDefinition Width="27*"/>
-        </Grid.ColumnDefinitions>
+    <StackPanel Margin="20,20,20,20">
+        <TextBlock Text="Nazwa produktu" />
+        <TextBox x:Name="NazwaTextBox" Margin="0,5,0,10" />
+        
+        <TextBlock Text="Cena" />
+        <TextBox x:Name="CenaTextBox" Margin="0,5,0, 10" />
 
-    </Grid>
+        <TextBlock Text="Ilość" />
+        <TextBox x:Name="IloscTextBox" Margin="0,5,0,10" />
+
+        <Button x:Name="ObliczButton" Content="Oblicz Wartość" Click="Oblicz" />
+
+        <TextBlock x:Name="WynikTextBlock" FontSize="16" />
+        
+    </StackPanel>
 </Window>
