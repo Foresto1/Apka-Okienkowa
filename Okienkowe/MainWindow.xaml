@@ -6,19 +6,30 @@
         xmlns:local="clr-namespace:Okienkowe"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <StackPanel Margin="20,20,20,20">
-        <TextBlock Text="Nazwa produktu" />
-        <TextBox x:Name="NazwaTextBox" Margin="0,5,0,10" />
-        
-        <TextBlock Text="Cena" />
-        <TextBox x:Name="CenaTextBox" Margin="0,5,0, 10" />
 
-        <TextBlock Text="Ilość" />
-        <TextBox x:Name="IloscTextBox" Margin="0,5,0,10" />
+    <Grid Margin="20, 20, 20, 20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Nazwa produktu" />
+        <TextBox x:Name="NazwaTextBox" Grid.Row="0" Grid.Column="1" Margin="0,5,0,10" VerticalAlignment="Center"/>
 
-        <Button x:Name="ObliczButton" Content="Oblicz Wartość" Click="Oblicz" />
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Cena" />
+        <TextBox x:Name="CenaTextBox" Grid.Row="1" Grid.Column="1" Margin="0,5,0, 10" VerticalAlignment="Center"/>
 
-        <TextBlock x:Name="WynikTextBlock" FontSize="16" />
-        
-    </StackPanel>
+        <TextBlock Text="Ilość" Grid.Row="2" Grid.Column="0" />
+        <TextBox x:Name="IloscTextBox" Grid.Row="2" Grid.Column="2" Margin="0,5,0,10" VerticalAlignment="Center" />
+
+        <Button x:Name="ObliczButton" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="Oblicz Wartość" Click="Oblicz" />
+
+        <TextBlock x:Name="WynikTextBlock" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" FontSize="16" />
+    </Grid>
 </Window>
