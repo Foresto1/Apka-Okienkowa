@@ -44,6 +44,19 @@ namespace Okienkowe
             //int ilosc = int.Parse(IloscTextBox.Text);
             double wartoscZamowienia = cena * ilosc;
             WynikTextBlock.Text = wartoscZamowienia.ToString();
+
+            //TODO wypisz w WynikTextBLock nazwę produktu, kategorie, cenę, ilość i wartość zamówienia
+            //Jeśli jest zaznaczony checkbox promocja odejmij 10% od wartości zamówienia
+
+            if (PromocjaCheckBox.IsChecked == true)
+            {
+                wartoscZamowienia *= 0.9;
+            }
+
+            WynikTextBlock.Text = $"Nazwa produktu: {NazwaTextBox.Text}\n" +
+                                  $"Kategoria: {KategorieComboBox.SelectedItem}\n" +
+                                  $"Cena: "
+
         }
     }
 }
