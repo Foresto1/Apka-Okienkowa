@@ -24,13 +24,26 @@ namespace Okienkowe
         private void Oblicz(object sender, RoutedEventArgs e)
         {
             //TODO: pobierz tekst z pola z ceną i zmień go na liczbę
-            int cena = int.Parse(CenaTextBox.Text);
             //TODO: pobierz tekst z pola z ilością i zmień go na liczbę
             
             //TODO: Jeśli wartości są niepoprawne lub ujemne wypisz komunikat w polu wynik albo rzuć wyjątek
             //TODO: oblicz wartość zamówienia i wypisz ją w polu wynik
             // int.parse() - konwertuje string na int, jeśli nie da się to rzuca wyjątek
             // int.tryparse() - konwertuje string na int, jeśli nie da się to zwraca false i nie rzuca wyjątku (Bad) 
+            if (!double.TryParse(CenaTextBox.Text, out double cena))
+            {
+                WynikTextBlock.Text = "Niepoprawna cena";
+                return;
+            }
+            //double cena = double.Parse(CenaTextBox.Text);
+            if (!int.TryParse(IloscTextBox.Text, out int ilosc))
+            {
+                WynikTextBlock.Text = "Niepoprawna ilość";
+                return;
+            }
+            //int ilosc = int.Parse(IloscTextBox.Text);
+            double wartoscZamowienia = cena * ilosc;
+            WynikTextBlock.Text = wartoscZamowienia.ToString();
         }
     }
 }
