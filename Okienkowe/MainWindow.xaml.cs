@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.ObjectModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,47 +17,72 @@ namespace Okienkowe
     /// </summary>
     public partial class MainWindow : Window
     {
+        //jeżeli potrzebujemy skorzystać z czegoś przez data binding, to musi publiczne i 
+        //musi być własnością (property), a nie polem (field) - musi mieć get i set
+        public ObservableCollection<Produkt> produkty { get; set; } = new ObservableCollection<Produkt>();
         public MainWindow()
         {
             InitializeComponent();
+            KategorieComboBox.ItemsSource = new string[] { "Elektronika", "Odzież", "Książki", "Meble" };
+            KategorieComboBox.SelectedIndex = 0;
+            produkty.Add(new Produkt { Nazwa = "Laptop", Cena = 3500, Ilosc = 5, Kategoria = "Elektronika" });
+            produkty.Add(new Produkt { Nazwa = "Koszula", Cena = 120, Ilosc = 10, Kategoria = "Odzież" });
+            //ListaProduktow.ItemsSource = produkty;
+            //zamiast przypisywać itemsource możemmy ustalić kontekst danych dla całego okna,
+            //wtedy wszystkie kontrolki w tym oknie mogą korzystać z tego kontekstu
+            //i przez to czytać dane z właściwości tego okna (czyli z MainWindow)
+            //takie jak public ObservableCollection<Produkt> produkty { get; set; }
+            DataContext = this;
         }
 
         private void Oblicz(object sender, RoutedEventArgs e)
         {
-            //TODO: pobierz tekst z pola z ceną i zmień go na liczbę
-            //TODO: pobierz tekst z pola z ilością i zmień go na liczbę
-            
-            //TODO: Jeśli wartości są niepoprawne lub ujemne wypisz komunikat w polu wynik albo rzuć wyjątek
-            //TODO: oblicz wartość zamówienia i wypisz ją w polu wynik
-            // int.parse() - konwertuje string na int, jeśli nie da się to rzuca wyjątek
-            // int.tryparse() - konwertuje string na int, jeśli nie da się to zwraca false i nie rzuca wyjątku (Bad) 
-            if (!double.TryParse(CenaTextBox.Text, out double cena))
+            // || cena < 0 — TryParse przepuści -5, więc ujemne trzeba odrzucić osobno
+            if (!double.TryParse(CenaTextBox.Text, out double cena) || cena < 0)
             {
-                WynikTextBlock.Text = "Niepoprawna cena";
+                WynikTextBlock.Text = "Niepoprawna wartość ceny";
                 return;
             }
-            //double cena = double.Parse(CenaTextBox.Text);
-            if (!int.TryParse(IloscTextBox.Text, out int ilosc))
+            if (!int.TryParse(IloscTextBox.Text, out int ilosc) || ilosc < 0)
             {
-                WynikTextBlock.Text = "Niepoprawna ilość";
+                WynikTextBlock.Text = "Niepoprawna wartość ilości";
                 return;
             }
-            //int ilosc = int.Parse(IloscTextBox.Text);
+
+            // ItemsSource to tablica string, więc SelectedItem jest stringiem (albo null)
+            string kategoria = KategorieComboBox.SelectedItem as string ?? "brak kategorii";
+
             double wartoscZamowienia = cena * ilosc;
-            WynikTextBlock.Text = wartoscZamowienia.ToString();
-
-            //TODO wypisz w WynikTextBLock nazwę produktu, kategorie, cenę, ilość i wartość zamówienia
-            //Jeśli jest zaznaczony checkbox promocja odejmij 10% od wartości zamówienia
-
+            // IsChecked jest typu bool? (trzy stany), stąd porównanie z true
             if (PromocjaCheckBox.IsChecked == true)
             {
-                wartoscZamowienia *= 0.9;
+                wartoscZamowienia *= 0.9;   // promocja -10%
             }
 
-            WynikTextBlock.Text = $"Nazwa produktu: {NazwaTextBox.Text}\n" +
-                                  $"Kategoria: {KategorieComboBox.SelectedItem}\n" +
-                                  $"Cena: "
+            // F2 = dwa miejsca po przecinku, separator zgodny z ustawieniami systemu
+            WynikTextBlock.Text = $"{NazwaTextBox.Text} ({kategoria}): {wartoscZamowienia:F2} zł";
+        }
+
+        private void DodajProdukt(object sender, RoutedEventArgs e)
+        {
+            string nazwa = NazwaTextBox.Text;
+            double cena = double.Parse(CenaTextBox.Text);
+            int ilosc = int.Parse(IloscTextBox.Text);
+            string kategoria = KategorieComboBox.SelectedItem as string ?? "brak kategorii";
+
+            produkty.Add(new Produkt { Nazwa = nazwa, Cena = cena, Ilosc = ilosc, Kategoria = kategoria });
 
         }
-    }
+
+        private void UsunProdukt(object sender, RoutedEventArgs e)
+        {
+            if (ListaProduktow.SelectedItem is Produkt wybranyProdukt)
+            {
+                produkty.Remove(wybranyProdukt);
+            }
+            else
+            {
+                MessageBox.Show("Nie wybrano produktu do usunięcia.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 }
