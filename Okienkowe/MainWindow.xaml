@@ -13,6 +13,8 @@
             <!-- tyle ile potrzebujesz -->
             <ColumnDefinition Width="*" />
             <!-- tyle ile zostanie -->
+            <ColumnDefinition Width="*" />
+            <!-- tyle ile zostanie -->
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -55,23 +57,24 @@
 
         <TextBlock x:Name="WynikTextBlock" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" FontSize="16" Margin="0,12,0,12"/>
         <Button x:Name="DodajProduktButton" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Content="Dodaj produkt" Click="DodajProdukt"/>
-        <!-- lista produktów w (przed)ostatnim wierszu, szerokość dwóch kolumn, margines z góry 12px -->
-        <ListBox x:Name="ListaProduktow" ItemsSource="{Binding produkty}" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,12,0,12">
-            <!-- miejsce na szablon wyświetlanych danych -->
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Margin="0,2">
-                        <!-- stackpanel zeby rzeczy wyświetlały się obok siebie -->
-                        <TextBlock Text="{Binding Nazwa}" FontWeight="Bold" />
-                        <TextBlock>
-                            <Run Text="{Binding Kategoria}" />
-                            <Run Text=" - " />
-                            <Run Text="{Binding Cena, StringFormat={}{0:F2} zł}" />
-                        </TextBlock>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <!-- tabela produktów; ItemsSource jest powiązany z kolekcją produkty w MainWindow -->
+        <DataGrid x:Name="ListaProduktow" ItemsSource="{Binding produkty}"
+                  Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,12,0,12"
+                  AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nazwa" Binding="{Binding Nazwa}" Width="*" />
+                <DataGridTextColumn Header="Kategoria" Binding="{Binding Kategoria}" Width="*" />
+                <DataGridTextColumn Header="Cena" Binding="{Binding Cena, StringFormat={}{0:F2} zł}" Width="*" />
+                <DataGridTextColumn Header="Ilość" Binding="{Binding Ilosc}" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
         <Button x:Name="UsunProduktButton" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Content="Usuń produkt" Click="UsunProdukt" />
+        <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="10" Margin="20,0,0,0" 
+                    DataContext="{Binding SelectedItem, ElementName=ListaProduktow}">
+            <TextBlock Text="{Binding Nazwa}" FontSize="18" />
+            <TextBlock Text="{Binding Ilosc, StringFormat=Na stanie {0} szt.}" />
+            <TextBlock Text="{Binding Cena, StringFormat=Cena: {0:F2} zł}" />
+            <!-- TODO: dodaj wartość magazynu - będziesz potrzebować publicznej właściwości w klasie Produkt -->
+        </StackPanel>
     </Grid>
 </Window>

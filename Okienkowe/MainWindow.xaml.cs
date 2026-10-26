@@ -85,4 +85,5 @@ namespace Okienkowe
                 MessageBox.Show("Nie wybrano produktu do usunięcia.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+    }
 }
