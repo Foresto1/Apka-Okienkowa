@@ -33,66 +33,58 @@
             <!-- wynik -->
             <RowDefinition Height="Auto"/>
             <!-- guzik dodaj -->
-            <RowDefinition Height="10*" />
-            <RowDefinition Height="11*"/>
-            <RowDefinition Height="0*"/>
-            <RowDefinition Height="0*"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="0*"/>
-            <RowDefinition Height="0*"/>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="0*"/>
-            <RowDefinition Height="0*"/>
-            <RowDefinition Height="0*"/>
-            <RowDefinition Height="9*"/>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="0*"/>
-            <RowDefinition Height="0*"/>
-            <RowDefinition Height="14*"/>
-            <RowDefinition Height="53*"/>
-            <RowDefinition Height="26*"/>
-            <RowDefinition Height="116*"/>
+            <RowDefinition Height="*" />
             <!-- lista produktów -->
             <RowDefinition Height="Auto"/>
             <!-- guzik usuń  -->
         </Grid.RowDefinitions>
-        <TextBlock Grid.Column="0" Text="Nazwa produktu" Margin="0,0,10,0" VerticalAlignment="Center" />
-        <TextBox x:Name="NazwaTextBox" Grid.Row="0" Grid.Column="1" Margin="0,5,331,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2" />
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Nazwa produktu" Margin="0,0,10,0" VerticalAlignment="Center" />
+        <TextBox x:Name="NazwaTextBox" Grid.Row="0" Grid.Column="1" Margin="0,5,0,10" VerticalAlignment="Center" />
 
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Cena" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,0,331,0" />
-        <TextBox x:Name="CenaTextBox" Grid.Row="1" Grid.Column="1" Margin="0,5,331,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2" />
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Cena" VerticalAlignment="Center" />
+        <TextBox x:Name="CenaTextBox" Grid.Row="1" Grid.Column="1" Margin="0,5,0,10" VerticalAlignment="Center" />
 
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Ilość" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,0,331,0" />
-        <TextBox x:Name="IloscTextBox" Grid.Row="2" Grid.Column="1" Margin="0,5,331,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2" />
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Ilość" VerticalAlignment="Center" />
+        <TextBox x:Name="IloscTextBox" Grid.Row="2" Grid.Column="1" Margin="0,5,0,10" VerticalAlignment="Center" />
 
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="Kategoria" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,0,331,0" />
-        <ComboBox x:Name="KategorieComboBox" Grid.Row="3" Grid.Column="1" Margin="0,0,331,0" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.RowSpan="2" />
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Kategoria" VerticalAlignment="Center" />
+        <ComboBox x:Name="KategorieComboBox" Grid.Row="3" Grid.Column="1" Margin="0,5,0,10" VerticalAlignment="Center" />
 
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="Promocja" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,0,331,0" />
-        <CheckBox x:Name="PromocjaCheckBox" Grid.Row="4" Grid.Column="1" Margin="0,0,331,0" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.RowSpan="2" />
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Promocja" VerticalAlignment="Center" />
+        <CheckBox x:Name="PromocjaCheckBox" Grid.Row="4" Grid.Column="1" Margin="0,5,0,10" VerticalAlignment="Center" />
+        <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <Button x:Name="ObliczButton" Content="Oblicz wartość" Click="Oblicz" Width="200"/>
+            <Button x:Name="ZapiszButton" Content="Zapisz" Click="Zapisz" Margin="10,0,0,0" Width="200"/>
+        </StackPanel>
 
-        <Button x:Name="ObliczButton" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Content="Oblicz wartość" Click="Oblicz" Margin="0,0,331,45" Grid.RowSpan="2"/>
 
-        <TextBlock x:Name="WynikTextBlock" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" FontSize="16" Margin="0,12,331,12"/>
-        <Button x:Name="DodajProduktButton" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Content="Dodaj produkt" Click="DodajProdukt" Margin="0,45,331,10" Grid.RowSpan="4"/>
-        <!-- tabela produktów; ItemsSource jest powiązany z kolekcją produkty w MainWindow -->
-        <DataGrid x:Name="ListaProduktow" ItemsSource="{Binding produkty}"
-                  Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,2,331,12"
-                  AutoGenerateColumns="False" IsReadOnly="True" Grid.RowSpan="18" SelectionChanged="ListaProduktow_SelectionChanged">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Nazwa" Binding="{Binding Nazwa}" Width="*" />
-                <DataGridTextColumn Header="Kategoria" Binding="{Binding Kategoria}" Width="*" />
-                <DataGridTextColumn Header="Cena" Binding="{Binding Cena, StringFormat={}{0:F2} zł}" Width="*" />
-                <DataGridTextColumn Header="Ilość" Binding="{Binding Ilosc}" Width="*" />
-            </DataGrid.Columns>
-        </DataGrid>
-        <Button x:Name="UsunProduktButton" Grid.Row="26" Grid.Column="0" Grid.ColumnSpan="3" Content="Usuń produkt" Click="UsunProdukt" Margin="0,27,331,0" />
-        <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="27"  
+        <TextBlock x:Name="WynikTextBlock" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" FontSize="16" Margin="0,12,0,12"/>
+        <Button x:Name="DodajProduktButton" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Content="Dodaj produkt" Click="DodajProdukt"/>
+        <!-- lista produktów w (przed)ostatnim wierszu, szerokość dwóch kolumn, margines z góry 12px -->
+        <ListBox x:Name="ListaProduktow" ItemsSource="{Binding produkty}" 
+                 Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" 
+                 Margin="0,12,0,12" SelectionChanged="PokazZaznaczony">
+            <!-- miejsce na szablon wyświetlanych danych -->
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="0,2">
+                        <!-- stackpanel zeby rzeczy wyświetlały się obok siebie -->
+                        <TextBlock Text="{Binding Nazwa}" FontWeight="Bold" />
+                        <TextBlock>
+                            <Run Text="{Binding Kategoria}" />
+                            <Run Text=" - " />
+                            <Run Text="{Binding Cena, StringFormat={}{0:F2} zł}" />
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button x:Name="UsunProduktButton" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Content="Usuń produkt" Click="UsunProdukt" />
+        <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="10" Margin="20,0,0,0" 
                     DataContext="{Binding SelectedItem, ElementName=ListaProduktow}">
             <TextBlock Text="{Binding Nazwa}" FontSize="18" />
             <TextBlock Text="{Binding Ilosc, StringFormat=Na stanie {0} szt.}" />
             <TextBlock Text="{Binding Cena, StringFormat=Cena: {0:F2} zł}" />
-            <!-- TODO: dodaj wartość magazynu - będziesz potrzebować publicznej właściwości w klasie Produkt -->
             <!-- TODO: dodaj wartość magazynu - będziesz potrzebować publicznej właściwości w klasie Produkt -->
         </StackPanel>
     </Grid>
