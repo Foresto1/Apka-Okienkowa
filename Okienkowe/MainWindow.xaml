@@ -93,6 +93,7 @@
             <TextBlock Text="{Binding Ilosc, StringFormat=Na stanie {0} szt.}" />
             <TextBlock Text="{Binding Cena, StringFormat=Cena: {0:F2} zł}" />
             <!-- TODO: dodaj wartość magazynu - będziesz potrzebować publicznej właściwości w klasie Produkt -->
+            <!-- TODO: dodaj wartość magazynu - będziesz potrzebować publicznej właściwości w klasie Produkt -->
         </StackPanel>
     </Grid>
 </Window>
